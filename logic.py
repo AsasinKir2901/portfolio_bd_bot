@@ -125,8 +125,16 @@ WHERE project_name=? AND user_id=?
         sql = f"""DELETE FROM skills WHERE skill_id = ? AND project_id = ?"""
         self.__executemany(sql, [(skill_id, project_id)])
 
+def add_photo_column(self):
+    conn = sqlite3.connect(self.database)
+    with conn:
+        conn.execute("""
+            ALTER TABLE projects
+            ADD COLUMN photo TEXT
+        """)
+        conn.commit()
 
 if __name__ == '__main__':
     manager = DB_Manager(DATABASE)
-    
+    manager.add_photo_column()
     
